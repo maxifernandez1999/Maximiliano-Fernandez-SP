@@ -9,6 +9,7 @@ import { User } from '../models/user';
 export class AuthService {
 
   public isLoged:boolean = false;
+  public type:string = '';
   constructor(private auth: AngularFireAuth) { }
 
   public register(user:User):Promise<any>{
