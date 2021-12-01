@@ -1,0 +1,40 @@
+<div  @enterState class="text-center">
+      <main class="form-signin">
+            <form [formGroup]="loginForm">
+                  <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+                  <div class="form-floating">
+                        <input type="email" class="form-control" id="floatingInput"             placeholder="name@example.com" formControlName="email"
+                        [ngClass]="{ 'is-invalid': form.email.touched && form.email.errors }" />
+                        <label for="floatingInput">Email address</label>
+                        <div *ngIf="form.email.touched && form.email.errors" class="invalid-feedback">
+                              <div *ngIf="form.email.errors.required">Es requerido</div>
+                              <div *ngIf="form.email.errors.email">Invalido</div>
+                        </div>   
+                  </div>
+                  <div class="form-floating">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" [ngClass]="{ 'is-invalid': form.password.touched && form.password.errors }" formControlName="password" />
+                        <label for="floatingPassword">Password</label>
+                        <div *ngIf="form.password.touched && form.password.errors" class="invalid-feedback">
+                              <div *ngIf="form.password.errors.required">Es requerido</div>
+                              <div *ngIf="form.password.errors.mxlength">Tiene que tener como minimo 6 caracteres</div>
+                        </div>
+                  </div>
+                  <div class="form-floating">
+                        <a (click)="redirect()"><strong>Register</strong></a>  
+                  </div>
+                  <button class="w-100 btn btn-lg btn-primary mt-2" type="button" [disabled]="loginForm.invalid" (click)="signIn()">
+                        Sign in
+                  </button>
+                  <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" (click)="fastAccess('admin')">
+                        fast Access Admin
+                  </button>
+                  <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" (click)="fastAccess('vendedor')">
+                        fast Access Seller
+                  </button>
+                  <button class="w-100 btn btn-lg btn-secondary mt-2" type="button" (click)="fastAccess('comprador')">
+                        fast Access Buyer
+                  </button>
+                  <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+            </form>
+      </main>
+</div>

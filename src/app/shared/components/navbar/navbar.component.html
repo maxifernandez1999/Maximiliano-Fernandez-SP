@@ -6,10 +6,16 @@
           </a>
   
           <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-            <li><a class="nav-link px-2 text-white">Products</a></li>
-            <li><a class="nav-link px-2 text-white">Containers</a></li>
-            <li><a class="nav-link px-2 text-white">Details</a></li>
+            <li *ngIf="type ==='Administrador'"><a class="nav-link px-2 text-white" (click)="redirect('add')">Add Cripto</a></li>
+            <li *ngIf="type ==='Vendedor'"><a class="nav-link px-2 text-white" (click)="redirect('cripto')">Sell Cripto</a></li>
+            <li *ngIf="type ==='Comprador'"><a class="nav-link px-2 text-white" (click)="redirect('compra')">Buy Cripto</a></li>
           </ul>
+          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <div class="text-center">
+              <h5 appEmail></h5>
+            </div>
+          </ul>
+          
           <div class="text-end">
             <button type="button" class="btn btn-warning" (click)="signOut()">Logout</button>
           </div>

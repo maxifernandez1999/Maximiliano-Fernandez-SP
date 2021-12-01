@@ -16,13 +16,10 @@
                   </a>
             </header>
 
-            <div [formGroup]="formG" class="p-5 mb-4 bg-light rounded-3">
-                  <select formControlName="email" class="form-select" aria-label="Default select example" >
-                        <option *ngFor="let user of users" value="{{user.email}}">{{user.email}}</option>
-                  </select>
+            <div class="p-5 mb-4 bg-light rounded-3">
+                  <h3>Sellers</h3>
+                  <button  *ngFor="let user of users" [appImage]="user" class="btn btn-info m-1" value="{{user.email}}" (click)="getSeller(user)">{{user.email}}</button><br>
                   <hr>
-                  <button class="btn btn-success m-2" (click)="changeEmailValue()">Filter</button>
-                  <button class="btn btn-warning m-2" (click)="reset()">Reset</button>
                   <div class="container-fluid py-5">
                         <table class="table table-hover">
                               <thead>
@@ -41,7 +38,7 @@
                                   <th>{{cripto.comision}}</th>
                                   <th>{{cripto.ano}}</th>
                                   <th><button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="sendDataToModal(cripto)">
-                                    Launch demo modal
+                                    Buy
                                   </button></th>
                                 </tr>
                               </tbody>
@@ -50,6 +47,6 @@
             </div>
       </div>
 </main>
-<app-modal-compra [criptoToCompra]="dataToModal"></app-modal-compra>
+<app-modal-compra [dataToCompra]="dataToModal"></app-modal-compra>
 
 

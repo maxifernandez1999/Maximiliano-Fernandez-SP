@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Cripto } from 'src/app/shared/models/cripto';
 import { User } from 'src/app/shared/models/user';
 import { CriptoService } from 'src/app/shared/services/cripto.service';
@@ -12,50 +11,31 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class CompraCriptoComponent implements OnInit {
   @Input('criptoInput') criptoInput:Cripto[] = [];
-  formG:FormGroup;
   criptosVende: Cripto[] = [];
   email:string;
+  currentUser:User;
   users:User[] = [];
-  dataToModal:Cripto;
+  dataToModal:any[] = [];
+  filterData:any;
   password:string;
   constructor(private criptoService: CriptoService,
-    private userService: UserService,
-    private fb : FormBuilder) {}
+    private userService: UserService) {}
 
   ngOnInit(): void {
-    this.initForm();
     this.getUserData();
-    // this.getCriptosFromUser();
     this.getSellers();
   }
-  initForm() {
-    this.formG = this.fb.group({
-      email: ['', [Validators.required]]
-    });
-  }
-  ngOnChanges(changes:SimpleChanges):void{
-    console.log(changes.criptoInput.currentValue)
-    for (const cripto of this.criptoInput) {
-      this.criptosVende.push(cripto);
-    }
-    console.log(this.criptosVende);
-    
-  }
-  get emailValue(): string {
-    return this.formG.get('email').value;
-  }
-  public changeEmailValue():void{
-    this.getCriptosFromUser(this.emailValue);
-  }
-  public reset():void{
+  public getSeller(user:User){
     this.criptosVende = [];
+    this.currentUser = user;
+    this.getCriptosFromUser(this.currentUser.email);
   }
   public getUserData():void{
     this.email = JSON.parse(localStorage.getItem('user')).email;
     this.password = JSON.parse(localStorage.getItem('user')).password;
   }
   public sendDataToModal(cripto:Cripto):void{
-    this.dataToModal = cripto;
+    this.dataToModal = [cripto,this.currentUser,JSON.parse(localStorage.getItem('user'))];
   }
   public getCriptosFromUser(emailFromSelect:any): void {
     this.userService.getUsers().subscribe((response) => {
@@ -78,11 +58,23 @@ export class CompraCriptoComponent implements OnInit {
     console.log(this.criptosVende);
   }
   public getSellers():void{
-    this.userService.getUsers().subscribe(response => {
-      response.forEach(seller => {
-        if (seller.type === "Vendedor") {
-          this.users.push(seller);
+    this.userService.getUsersWithID().subscribe(response => {
+      response.forEach(res => {
+        if (res.data().type === "Vendedor" && res.data().habilitado) {
+          let user: User = {
+            id: res.id,
+            email: res.data().email,
+            password: res.data().password,
+            photo: res.data().photo,
+            type: res.data().type,
+            vende: res.data().vende,
+            habilitado: res.data().habilitado,
+            compra: res.data().compra
+          };
+          this.users.push(user);
         }
+        
+        
       })
       
     })

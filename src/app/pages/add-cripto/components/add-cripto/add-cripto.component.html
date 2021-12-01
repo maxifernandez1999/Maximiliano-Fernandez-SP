@@ -1,0 +1,67 @@
+<app-navbar></app-navbar>
+<div class="container">
+      <main>
+            <div class="row m-4">
+                  <div class="col-12">
+                        <h4 class="mb-3">Add Cripto</h4>
+                        <form [formGroup]="criptoForm" class="needs-validation">
+                              <div class="row g-3">
+                                    <div class="col-sm-6">
+                                          <label for="firstName" class="form-label">Nombre</label>
+                                          <input type="text"
+                                          formControlName="nombre"
+                                          [ngClass]="{ 'is-invalid': form.nombre.touched && form.nombre.errors }" class="form-control" placeholder="" value=""
+                                                required>
+                                                <div *ngIf="form.nombre.touched && form.nombre.errors" class="invalid-feedback">
+                                                      <div *ngIf="form.nombre.errors.required">Es requerido</div>
+                                                      <div *ngIf="form.nombre.errors.minlenght">minimo 6 caracteres</div>
+                                                </div>   
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                          <label for="lastName" class="form-label">costo Actual</label>
+                                          <input type="text"
+                                          formControlName="costoActual"
+                                          [ngClass]="{ 'is-invalid': form.costoActual.touched && form.costoActual.errors }" class="form-control" id="lastName" placeholder="" value=""
+                                                required>
+                                                <div *ngIf="form.costoActual.touched && form.costoActual.errors" class="invalid-feedback">
+                                                      <div *ngIf="form.costoActual.errors.required">Es requerido</div>
+                                                      <div *ngIf="form.costoActual.errors.maxlenght">maximo 30 caracteres</div>
+                                                </div> 
+                                    </div>
+
+                                    <div class="col-12">
+                                          <label for="username" class="form-label">Comision</label>
+                                          <div class="input-group has-validation">
+                                                <input type="text" class="form-control"
+                                                [ngClass]="{ 'is-invalid': form.comision.touched && form.comision.errors }" 
+                                                formControlName="comision"
+                                                      placeholder="comision" required>
+                                                      <div *ngIf="form.comision.touched && form.comision.errors" class="invalid-feedback">
+                                                            <div *ngIf="form.comision.errors.required">Es requerido</div>
+                                                            <div *ngIf="form.comision.errors.max">maximo 99999</div>
+                                                      </div> 
+                                          </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                          <label for="email" class="form-label">Año</label>
+                                          <input type="number" class="form-control"
+                                          [ngClass]="{ 'is-invalid': form.ano.touched && form.ano.errors }"
+                                          formControlName="ano"
+                                                placeholder="Año">
+                                                <div *ngIf="form.ano.touched && form.ano.errors" class="invalid-feedback">
+                                                      <div *ngIf="form.ano.errors.required">Es requerido</div>
+                                                </div> 
+                                    </div>
+                              </div>
+                              <br>
+                              <button class="w-100 btn btn-primary btn-lg" type="submit" [disabled]="criptoForm.invalid" (click)="addCripto()">Add</button>
+                        </form>
+                  </div>
+            </div>
+      </main>
+</div>
+<app-anable-vendedor></app-anable-vendedor>
+<app-list-users></app-list-users>
+
